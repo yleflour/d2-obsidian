@@ -120,14 +120,25 @@ export class D2Processor {
     svgEl.style.maxWidth = "100%";
     svgEl.style.height = "fit-content";
     svgEl.style.width = "fit-content";
-    const panzoomOpts: PanzoomOptions = {
-      maxScale: 5,
-      animate: true,
-    };
-    const panzoom = Panzoom(svgEl, panzoomOpts);
-
     this.formatLinks(svgEl);
     containerEl.innerHTML = this.sanitizeSVGIDs(svgEl, ctx.docId);
+
+    this.setupPanzoom(containerEl);
+  }
+
+  setupPanzoom(elem: HTMLElement) {
+    const panzoomOpts: PanzoomOptions = {
+      maxScale: 10,
+      animate: true,
+    };
+
+    const panzoom = Panzoom(elem, panzoomOpts);
+
+    elem.addEventListener("wheel", (event) => {
+      if (!event.ctrlKey) return;
+
+      panzoom.zoomWithWheel(event);
+    });
   }
 
   export = async (

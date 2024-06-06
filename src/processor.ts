@@ -120,6 +120,7 @@ export class D2Processor {
     svgEl.style.maxWidth = "100%";
     svgEl.style.height = "fit-content";
     svgEl.style.width = "fit-content";
+
     this.formatLinks(svgEl);
     containerEl.innerHTML = this.sanitizeSVGIDs(svgEl, ctx.docId);
 
